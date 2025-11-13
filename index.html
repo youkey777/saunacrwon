@@ -409,6 +409,107 @@
         border: 1px solid var(--line);
       }
 
+      /* Media / メディア掲載セクション */
+      .media {
+        margin: 96px auto 0;
+      }
+
+      .media .section-eyebrow {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .media .section-title {
+        margin-bottom: 20px;
+      }
+
+      .media-feature {
+        position: relative;
+        border-radius: var(--radius);
+        overflow: hidden;
+        background: radial-gradient(
+            circle at top left,
+            rgba(255, 255, 255, 0.08),
+            transparent 55%
+          ),
+          radial-gradient(
+            circle at bottom right,
+            rgba(255, 255, 255, 0.06),
+            transparent 55%
+          ),
+          #111318;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .media-feature img {
+        width: 100%;
+        height: auto;
+        max-height: 520px;
+        object-fit: contain;
+        display: block;
+        opacity: 0.75;
+        background: #000;
+        padding: 20px;
+      }
+
+      .media-content {
+        position: absolute;
+        inset: auto 0 0 0;
+        padding: 24px 28px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+        color: var(--ink);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .media-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+      }
+
+      .media-label span:last-child {
+        opacity: 0.8;
+      }
+
+      .media-headline {
+        font-size: clamp(1.05rem, 2vw, 1.3rem);
+        font-weight: 600;
+      }
+
+      .media-sub {
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .concept-visual {
+        margin: 80px auto 0;
+        text-align: center;
+      }
+
+      .concept-visual figure {
+        margin: 0 auto;
+        max-width: 960px;
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: #0d0d10;
+      }
+
+      .concept-visual img {
+        width: 100%;
+        display: block;
+      }
+
       .lineup {
         position: relative;
       }
@@ -566,6 +667,29 @@
         }
       }
 
+      @media (max-width: 768px) {
+        .media {
+          margin-top: 72px;
+        }
+
+        .media-feature img {
+          max-height: 360px;
+          padding: 12px;
+        }
+
+        .media-content {
+          padding: 18px 16px 20px;
+        }
+
+        .media-headline {
+          font-size: 1rem;
+        }
+
+        .concept-visual figure {
+          max-width: 100%;
+        }
+      }
+
       @media (max-width: 640px) {
         .ticker span {
           letter-spacing: 0.08em;
@@ -599,6 +723,7 @@
           <ul>
             <li><a href="#store">Store</a></li>
             <li><a href="#concept">Concept</a></li>
+            <li><a href="#media">Media</a></li>
             <li><a href="#issues">Issues</a></li>
             <li><a class="btn-ghost" href="#lineup">Cart</a></li>
           </ul>
@@ -608,6 +733,7 @@
       <div class="mobile-nav">
         <a href="#store">Store</a>
         <a href="#concept">Concept</a>
+        <a href="#media">Media</a>
         <a href="#issues">Issues</a>
         <a href="#lineup">Cart</a>
       </div>
@@ -617,35 +743,35 @@
       <section class="hero" id="store">
         <div class="collage">
           <figure class="collage-item">
-            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80" alt="サウナフェスで帽子を被る女性" />
+            <img src="画像/カルーセル/P1036574.JPG" alt="フェスでSauna Crownを被るサウナー" />
             <figcaption>FES DROP</figcaption>
           </figure>
           <figure class="collage-item">
-            <img src="https://images.unsplash.com/photo-1514996937319-344454492b37?auto=format&fit=crop&w=900&q=80" alt="ニットキャップのテクスチャ" />
-            <figcaption>100% COTTON</figcaption>
+            <img src="画像/カルーセル/P1047830.JPG" alt="Sauna Crownモデル撮影風景" />
+            <figcaption>URBAN SNAP</figcaption>
           </figure>
           <figure class="collage-item">
-            <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=900&q=80" alt="サウナのスチーム" />
+            <img src="画像/カルーセル/WqrcIfv1RJ_qW-HeDFryR_f36cc1d2ce844972adc92aa61f55e092.png" alt="蒸気とサウナハット" />
             <figcaption>STEAM MODE</figcaption>
           </figure>
           <figure class="collage-item">
-            <img src="https://images.unsplash.com/photo-1509475826633-fed577a2c71b?auto=format&fit=crop&w=900&q=80" alt="ロウリュの熱波" />
-            <figcaption>LÖYLY</figcaption>
+            <img src="画像/カルーセル/メイン.jpg" alt="サウナハットのクローズアップ" />
+            <figcaption>MAIN VISUAL</figcaption>
           </figure>
           <figure class="collage-item">
-            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1000&q=80" alt="ブランドバッグを持つモデル" />
-            <figcaption>URBAN SAUNA</figcaption>
-          </figure>
-          <figure class="collage-item">
-            <img src="https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=900&q=80" alt="帽子とアウトドアギア" />
+            <img src="画像/カルーセル/没の方.png" alt="Sauna Crown ギアセット" />
             <figcaption>GEAR SET</figcaption>
           </figure>
           <figure class="collage-item">
-            <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=900&q=80" alt="外気浴で休むサウナー" />
+            <img src="画像/カルーセル/選ばれる理由.png" alt="Sauna Crown カラーライン" />
+            <figcaption>COLOR REASON</figcaption>
+          </figure>
+          <figure class="collage-item">
+            <img src="画像/カルーセル/１のコピー28.jpg" alt="外気浴シーン" />
             <figcaption>BREATHER</figcaption>
           </figure>
           <figure class="collage-item">
-            <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=900&q=80" alt="カラフルな帽子スタンド" />
+            <img src="画像/カルーセル/１のコピー7.png" alt="Sauna Crown ディスプレイ" />
             <figcaption>COLOR LAB</figcaption>
           </figure>
         </div>
@@ -661,8 +787,6 @@
             <a class="btn btn-outline" href="#lineup">Lineup</a>
           </div>
         </div>
-        <div class="floating-pill pill-left">深被り / IMMERSION</div>
-        <div class="floating-pill pill-right">男女兼用 / UNI</div>
       </section>
 
       <section id="concept">
@@ -671,7 +795,7 @@
         <div class="scrap-grid">
           <article class="scrap-card tilt-left">
             <div class="scrap-image">
-              <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="街中でサウナトートを持つ女性" />
+              <img src="画像/コンセプト/没入シルエット.png" alt="没入シルエットのサウナハット" />
             </div>
             <h3>視線を遮断する没入シルエット</h3>
             <p>
@@ -680,7 +804,7 @@
           </article>
           <article class="scrap-card">
             <div class="scrap-image">
-              <img src="https://images.unsplash.com/photo-1503342250614-ca4407868a5b?auto=format&fit=crop&w=900&q=80" alt="カラーパレット" />
+              <img src="画像/コンセプト/サウナ専用カラー.png" alt="サウナ専用カラー" />
             </div>
             <h3>カラーラボ発・サウナ専用カラー</h3>
             <p>
@@ -689,13 +813,38 @@
           </article>
           <article class="scrap-card tilt-right">
             <div class="scrap-image">
-              <img src="https://images.unsplash.com/photo-1514996937319-344454492b37?auto=format&fit=crop&w=900&q=80" alt="テクスチャのアップ" />
+              <img src="画像/コンセプト/本格クオリティ.png" alt="本格クオリティの素材" />
             </div>
             <h3>コスパ良し、本格クオリティ</h3>
             <p>
               綿主体で洗えるタフさと、熱保護の厚みを両立。毎週のサ活にガシガシ投入できる価格帯で提供。
             </p>
           </article>
+        </div>
+      </section>
+
+      <section class="media" id="media">
+        <span class="section-eyebrow">Media</span>
+        <h2 class="section-title">サウナ雑誌「サウナブロス」に掲載されました。</h2>
+
+        <div class="media-feature">
+          <img
+            src="画像/メディア掲載.png"
+            alt="サウナ雑誌の誌面とサウナハット"
+          />
+          <div class="media-content">
+            <div class="media-label">
+              <span>MEDIA</span>
+              <span>SAUNA BROS.</span>
+            </div>
+            <p class="media-headline">
+              サウナ専門誌『サウナブロス』で、Sauna Crown のサウナハットが本格ギアとして紹介されました。
+            </p>
+            <p class="media-sub">
+              深くかぶれるシルエットや"サウナ専用カラー"へのこだわりが、
+              サウナを愛する読者向けにピックアップされています。
+            </p>
+          </div>
         </div>
       </section>
 
@@ -706,7 +855,7 @@
           <article class="lineup-item">
             <span class="tag">Deep Fit</span>
             <figure>
-              <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80" alt="ブラックのサウナハット" />
+              <img src="画像/Gear　Line/1.jpg" alt="Deep Shade ブラックモデル" />
             </figure>
             <h3>Deep Shade / Black</h3>
             <p>視界を一段落とすロングシルエット。熱波中も没入したいヘビーサウナーに。</p>
@@ -716,7 +865,7 @@
           <article class="lineup-item">
             <span class="tag">Festival</span>
             <figure>
-              <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=900&q=80" alt="グリーンのサウナハット" />
+              <img src="画像/Gear　Line/2.jpg" alt="Glacier Moss グリーンモデル" />
             </figure>
             <h3>Glacier Moss / Green</h3>
             <p>テントサウナで映える湿度系グリーン。男女どちらにも馴染むバイカラー。</p>
@@ -726,7 +875,7 @@
           <article class="lineup-item">
             <span class="tag">Limited</span>
             <figure>
-              <img src="https://images.unsplash.com/photo-1503342271370-92d266166e06?auto=format&fit=crop&w=900&q=80" alt="ベージュのサウナハット" />
+              <img src="画像/Gear　Line/3.jpg" alt="Sand Silence ベージュモデル" />
             </figure>
             <h3>Sand Silence / Beige</h3>
             <p>柔らかなサンドカラーで外気浴の記憶に同化。蒸気の色にも溶ける限定色。</p>
@@ -734,6 +883,14 @@
             <a class="btn btn-outline" href="#">Buy on Amazon</a>
           </article>
         </div>
+      </section>
+
+      <section class="concept-visual" aria-labelledby="concept-visual-title">
+        <span class="section-eyebrow">Concept</span>
+        <h2 class="section-title" id="concept-visual-title">Sauna Crown の世界観をまるごと体感。</h2>
+        <figure>
+          <img src="画像/ブランドイメージ.png" alt="Sauna Crown ブランドイメージ" />
+        </figure>
       </section>
 
       <section id="issues">
@@ -761,36 +918,6 @@
         </div>
       </section>
 
-      <section>
-        <span class="section-eyebrow">Instagram</span>
-        <h2 class="section-title">Follow @saunacrown</h2>
-        <div class="insta-grid">
-          <div class="insta-tile">
-            <img src="https://images.unsplash.com/photo-1521579971123-1192931a1452?auto=format&fit=crop&w=600&q=80" alt="Instagram 1" />
-          </div>
-          <div class="insta-tile">
-            <img src="https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=600&q=80" alt="Instagram 2" />
-          </div>
-          <div class="insta-tile">
-            <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80" alt="Instagram 3" />
-          </div>
-          <div class="insta-tile">
-            <img src="https://images.unsplash.com/photo-1475180098004-ca77a66827be?auto=format&fit=crop&w=600&q=80" alt="Instagram 4" />
-          </div>
-          <div class="insta-tile">
-            <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=600&q=80" alt="Instagram 5" />
-          </div>
-          <div class="insta-tile">
-            <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80" alt="Instagram 6" />
-          </div>
-          <div class="insta-tile">
-            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=80" alt="Instagram 7" />
-          </div>
-          <div class="insta-tile">
-            <img src="https://images.unsplash.com/photo-1463107971871-fbac9ddb920f?auto=format&fit=crop&w=600&q=80" alt="Instagram 8" />
-          </div>
-        </div>
-      </section>
     </main>
 
     <footer>
@@ -847,4 +974,3 @@
     </style>
   </body>
 </html>
-
