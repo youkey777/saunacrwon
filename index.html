@@ -1,677 +1,1081 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>TechNova - 次世代IT企業</title>
-    <script>
-        // 強制キャッシュクリア
-        const timestamp = Date.now();
-        if (performance.navigation.type === 1) {
-            // ページがリロードされた場合、強制的にキャッシュをクリア
-            if ('caches' in window) {
-                caches.keys().then(names => {
-                    names.forEach(name => caches.delete(name));
-                });
-            }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sauna Crown | 本格サウナハットブランド</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #060607;
+        --ink: #f5f5f1;
+        --muted: #bfbfb8;
+        --accent: #f6d64a;
+        --accent-alt: #ff6e48;
+        --card: #121217;
+        --line: rgba(255, 255, 255, 0.08);
+        --radius: 28px;
+        --transition: 0.5s cubic-bezier(0.6, 0, 0.4, 1);
+        --ticker-bg: #2a1c14;
+        --ticker-ink: #fff7e0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "IBM Plex Sans", system-ui, -apple-system, BlinkMacSystemFont,
+          "Helvetica Neue", "Segoe UI", "Yu Gothic", sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        line-height: 1.7;
+        letter-spacing: 0.01em;
+        overflow-x: hidden;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .ticker {
+        position: sticky;
+        top: 0;
+        z-index: 160;
+        background: var(--ticker-bg);
+        color: var(--ticker-ink);
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        overflow: hidden;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .ticker-track {
+        display: flex;
+        width: max-content;
+        animation: ticker 22s linear infinite;
+      }
+
+      .ticker span {
+        padding: 10px 32px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+      }
+
+      @keyframes ticker {
+        0% {
+          transform: translateX(0);
         }
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800&display=block" rel="stylesheet">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;800&display=block" as="style">
-    <link rel="stylesheet" href="styles.css?v=GLASSMORPHISM-REDESIGN-20241217-160000&t=1734460000">
-</head>
-<body>
-    <!-- ヘッダー -->
-    <header class="header">
-        <nav class="nav">
-            <div class="nav-brand">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <div class="logo-cube"></div>
-                        <div class="logo-cube"></div>
-                        <div class="logo-cube"></div>
-                        <div class="logo-cube"></div>
-                    </div>
-                    <span class="logo-text">TechNova</span>
-                </div>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">ホーム</a></li>
-                <li><a href="#services" class="nav-link">サービス</a></li>
-                <li><a href="#about" class="nav-link">会社概要</a></li>
-                <li><a href="#technology" class="nav-link">技術</a></li>
-                <li><a href="#contact" class="nav-link">お問い合わせ</a></li>
-            </ul>
-            <div class="nav-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-            <button class="theme-toggle" id="themeToggle">
-                <span class="theme-icon">🌙</span>
-            </button>
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      header {
+        position: sticky;
+        top: 38px;
+        z-index: 140;
+        background: rgba(6, 6, 7, 0.85);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(16px);
+      }
+
+      .nav-inner {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-img {
+        display: block;
+        height: 36px;
+        width: auto;
+        object-fit: contain;
+        background: #000;
+        padding: 2px 4px 2px 6px;
+        border-radius: 4px;
+      }
+
+      .logo span {
+        letter-spacing: 0.4em;
+        font-size: 0.8rem;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 28px;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav a {
+        color: var(--muted);
+        font-size: 0.9rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      nav a:hover {
+        color: var(--ink);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 28px;
+        border-radius: 999px;
+        border: 1px solid var(--ink);
+        font-size: 0.8rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+      }
+
+      .btn:hover {
+        background: var(--ink);
+        color: #050505;
+      }
+
+      .btn-outline {
+        border-color: rgba(255, 255, 255, 0.4);
+        color: var(--ink);
+      }
+
+      .btn-outline:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .btn-ghost {
+        border-color: transparent;
+        color: var(--ink);
+        letter-spacing: 0.3em;
+      }
+
+      .hamburger {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        background: transparent;
+        color: var(--ink);
+      }
+
+      .hamburger span {
+        width: 18px;
+        height: 1px;
+        background: currentColor;
+      }
+
+      .mobile-nav {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(5, 5, 6, 0.94);
+        z-index: 130;
+        padding: 90px 24px 40px;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .mobile-nav a {
+        font-size: 1rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px 80px;
+      }
+
+      .section-eyebrow {
+        display: inline-flex;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        color: var(--muted);
+        margin-bottom: 10px;
+      }
+
+      .section-title {
+        margin: 0 0 28px;
+        font-size: clamp(1.6rem, 3vw, 2.3rem);
+      }
+
+      .hero {
+        position: relative;
+        min-height: 90vh;
+        padding-top: 60px;
+        overflow: visible;
+      }
+
+      .collage {
+        position: relative;
+        min-height: 70vh;
+      }
+
+      .collage-item {
+        position: absolute;
+        width: clamp(160px, 26vw, 320px);
+        height: clamp(190px, 32vw, 420px);
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 2px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+        transition: transform 0.6s ease, filter 0.6s ease;
+        background: #050505;
+        padding: 6px;
+      }
+
+      .collage-item img {
+        border-radius: calc(var(--radius) - 8px);
+      }
+
+      .collage-item figcaption {
+        position: absolute;
+        bottom: 12px;
+        left: 16px;
+        background: rgba(0, 0, 0, 0.55);
+        padding: 4px 12px;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+      }
+
+      .collage-item:hover {
+        transform: translateY(-10px) scale(1.02);
+        filter: saturate(1.15);
+      }
+
+      .collage-item:nth-child(1) {
+        top: 4%;
+        left: 6%;
+        transform: rotate(-4deg);
+      }
+
+      .collage-item:nth-child(2) {
+        top: -2%;
+        right: 18%;
+        transform: rotate(5deg);
+      }
+
+      .collage-item:nth-child(3) {
+        top: 42%;
+        left: 2%;
+        width: clamp(180px, 30vw, 360px);
+        height: clamp(200px, 30vw, 380px);
+        transform: rotate(7deg);
+      }
+
+      .collage-item:nth-child(4) {
+        top: 32%;
+        right: 6%;
+        transform: rotate(-7deg);
+      }
+
+      .collage-item:nth-child(5) {
+        top: 60%;
+        left: 30%;
+        transform: rotate(-3deg);
+      }
+
+      .collage-item:nth-child(6) {
+        top: 16%;
+        left: 38%;
+        width: clamp(160px, 22vw, 280px);
+        height: clamp(200px, 28vw, 360px);
+        transform: rotate(8deg);
+      }
+
+      .collage-item:nth-child(7) {
+        top: 58%;
+        right: 32%;
+        width: clamp(180px, 24vw, 320px);
+        height: clamp(210px, 30vw, 380px);
+        transform: rotate(2deg);
+      }
+
+      .collage-item:nth-child(8) {
+        top: 10%;
+        right: 0;
+        width: clamp(140px, 18vw, 220px);
+        height: clamp(180px, 24vw, 300px);
+        transform: rotate(-9deg);
+      }
+
+      .hero-text {
+        position: relative;
+        max-width: 540px;
+        margin: 40px auto 0;
+        padding: 28px 24px 30px;
+        background: rgba(6, 6, 7, 0.78);
+        border-radius: 32px;
+        border: 1px solid var(--line);
+        backdrop-filter: blur(18px);
+        text-align: center;
+      }
+
+      .hero-text small {
+        text-transform: uppercase;
+        letter-spacing: 0.28em;
+        font-size: 0.7rem;
+        color: var(--muted);
+      }
+
+      .hero-text h1 {
+        margin: 18px 0 14px;
+        font-family: "Noto Serif JP", "Yu Mincho", "Hiragino Mincho ProN", serif;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        font-size: clamp(2.1rem, 4.4vw, 3.1rem);
+        line-height: 1.5;
+      }
+
+      .hero-text h1 span {
+        display: block;
+      }
+
+      .hero-text h1 span:first-child {
+        font-size: 0.96em;
+      }
+
+      .hero-text h1 span:last-child {
+        font-size: 1.08em;
+      }
+
+      .hero-text p {
+        margin-bottom: 24px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .info-strip {
+        margin: 40px 0 80px;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        display: flex;
+        justify-content: center;
+        gap: 26px;
+        flex-wrap: wrap;
+        font-size: 0.85rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .scrap-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+      }
+
+      .scrap-card {
+        padding: 16px;
+        border-radius: var(--radius);
+        background: var(--card);
+        border: 1px solid var(--line);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scrap-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.12), transparent 60%);
+        pointer-events: none;
+      }
+
+      .scrap-image {
+        aspect-ratio: 4 / 3;
+        overflow: hidden;
+        border-radius: calc(var(--radius) - 6px);
+        margin-bottom: 10px;
+        background: #050505;
+      }
+
+      .scrap-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .scrap-card h3 {
+        margin: 0 0 6px;
+        font-size: 0.95rem;
+      }
+
+      .scrap-card p {
+        color: var(--muted);
+        margin: 0;
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
+
+      .media {
+        margin: 96px auto 0;
+      }
+
+      .media-feature {
+        position: relative;
+        border-radius: var(--radius);
+        overflow: hidden;
+        background:
+          radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 55%),
+          radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.06), transparent 55%),
+          #111318;
+      }
+
+      .media-feature img {
+        width: 100%;
+        height: 100%;
+        max-height: 420px;
+        object-fit: cover;
+      }
+
+      .media-content {
+        position: absolute;
+        inset: auto 0 0 0;
+        padding: 24px 28px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .media-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+      }
+
+      .media-sub {
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .lineup-grid {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .lineup-item {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 16px;
+        border: 1px solid var(--line);
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .lineup-item figure {
+        margin: 0;
+        border-radius: calc(var(--radius) - 6px);
+        overflow: hidden;
+        padding: 14px;
+        background: #0c0d10;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .lineup-item figure img {
+        border-radius: 14px;
+        transition: transform 0.6s ease, filter 0.6s ease;
+      }
+
+      .lineup-item:hover figure img {
+        transform: scale(1.07);
+        filter: saturate(1.1);
+      }
+
+      .tag {
+        font-size: 0.7rem;
+        letter-spacing: 0.3em;
+        color: var(--muted);
+      }
+
+      .price {
+        font-weight: 700;
+        font-size: 1.05rem;
+      }
+
+      .lineup-more {
+        margin-top: 18px;
+        text-align: center;
+      }
+
+      .concept-visual {
+        margin: 120px 0 80px;
+      }
+
+      .concept-visual figure {
+        margin: 0;
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid var(--line);
+      }
+
+      .issues-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+      }
+
+      .issue-card {
+        border-radius: var(--radius);
+        border: 1px solid var(--line);
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        background: var(--card);
+      }
+
+      .issue-thumb {
+        margin: 0;
+        border-radius: calc(var(--radius) - 12px);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        height: 160px;
+      }
+
+      .issue-card h4 {
+        margin: 0;
+        font-size: 1.05rem;
+      }
+
+      .issue-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .cta {
+        margin: 120px auto 0;
+        text-align: center;
+        border-radius: var(--radius);
+        border: 1px solid var(--line);
+        padding: 60px 30px;
+        background:
+          radial-gradient(circle at top right, rgba(255, 255, 255, 0.12), transparent 60%),
+          #111218;
+      }
+
+      footer {
+        padding: 60px 24px;
+        text-align: center;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+      }
+
+      .fade-up {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      .fade-up.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 980px) {
+        nav ul {
+          display: none;
+        }
+
+        .hamburger {
+          display: flex;
+        }
+
+        .mobile-nav.open {
+          display: flex;
+        }
+
+        .hero {
+          padding-top: 20px;
+        }
+
+        .collage {
+          position: relative;
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 16px;
+          padding: 40px 16px 24px;
+          justify-items: center;
+          overflow: visible;
+          min-height: auto;
+        }
+
+        .collage-item {
+          position: static !important;
+          width: 100% !important;
+          max-width: 480px;
+          height: auto !important;
+          margin: 0 auto;
+          padding: 6px;
+          border-radius: var(--radius);
+          box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+          transform: none !important;
+        }
+
+        .collage-item img {
+          width: 100%;
+          height: auto !important;
+          object-fit: contain;
+          border-radius: calc(var(--radius) - 8px);
+        }
+
+        .collage-item:nth-child(3n + 1) {
+          transform: translateX(-4%) rotate(-1.5deg);
+        }
+
+        .collage-item:nth-child(3n + 2) {
+          transform: translateX(3%) rotate(1.5deg);
+        }
+
+        .collage-item:nth-child(3n) {
+          transform: translateX(0%) rotate(-2deg);
+        }
+      }
+
+      @media (max-width: 768px) {
+        main {
+          padding: 0 18px 60px;
+        }
+
+        .info-strip {
+          letter-spacing: 0.1em;
+        }
+
+        .scrap-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 14px;
+        }
+
+        .scrap-card {
+          padding: 12px;
+        }
+
+        .lineup-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 14px;
+        }
+
+        .lineup-item {
+          padding: 12px;
+        }
+      }
+
+      @media (min-width: 769px) and (max-width: 1023px) {
+        .lineup-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .lineup-item:nth-child(4) {
+          display: none;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .lineup-grid {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .ticker span {
+          letter-spacing: 0.08em;
+          font-size: 0.7rem;
+          padding: 10px 18px;
+        }
+
+        .hero-text {
+          margin-top: 24px;
+          padding: 22px 18px 26px;
+        }
+
+        .hero-text h1 {
+          font-size: 1.9rem;
+          line-height: 1.6;
+          letter-spacing: 0.04em;
+        }
+
+        .hero-text p {
+          font-size: 0.85rem;
+        }
+
+        .scrap-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 12px;
+        }
+
+        .scrap-card {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body id="top">
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>♨ Deep Fit Sauna Hat / 目元まで沈めて整う準備</span>
+        <span>🧖‍♀ カラーデザイナー監修 "サウナ専用カラー"</span>
+        <span>🔥 本格サウナー向けギアブランド Sauna Crown</span>
+        <span>📚 SAUNABROS掲載モデル / Amazon ブランドストア公開中</span>
+        <span>♨ Deep Fit Sauna Hat / 目元まで沈めて整う準備</span>
+        <span>🧖‍♀ カラーデザイナー監修 "サウナ専用カラー"</span>
+        <span>🔥 本格サウナー向けギアブランド Sauna Crown</span>
+        <span>📚 SAUNABROS掲載モデル / Amazon ブランドストア公開中</span>
+      </div>
+    </div>
+
+    <header>
+      <div class="nav-inner">
+        <a class="logo" href="#top">
+          <img src="ロゴ/s-nega.jpg" alt="Sauna Crown ロゴ" class="logo-img" />
+          <span>SAUNA CROWN</span>
+        </a>
+        <nav>
+          <ul>
+            <li><a href="#store">Store</a></li>
+            <li><a href="#concept">Concept</a></li>
+            <li><a href="#media">Media</a></li>
+            <li><a href="#issues">Issues</a></li>
+            <li><a class="btn-ghost" href="https://www.amazon.co.jp/stores/SaunaCrown/page/FA0B8FF3-03C7-4098-9A84-69EEEC456238" target="_blank" rel="noopener">Cart</a></li>
+          </ul>
         </nav>
+        <button class="hamburger" type="button" aria-label="メニュー">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </header>
 
-    <!-- メインコンテンツ -->
+    <nav class="mobile-nav" aria-label="モバイルメニュー">
+      <a href="#store">Store</a>
+      <a href="#concept">Concept</a>
+      <a href="#media">Media</a>
+      <a href="#issues">Issues</a>
+      <a href="#lineup">Lineup</a>
+      <a href="https://www.amazon.co.jp/stores/SaunaCrown/page/FA0B8FF3-03C7-4098-9A84-69EEEC456238" target="_blank" rel="noopener">Amazon Store</a>
+    </nav>
+
     <main>
-        <!-- ヒーローセクション -->
-        <section id="home" class="hero">
-            <div class="hero-background">
-                <div class="bg-geometric-pattern"></div>
-                <div class="bg-gradient-overlay"></div>
-            </div>
-            <div class="hero-slideshow">
-                <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"></div>
-                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2015&q=80')"></div>
-                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"></div>
-                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"></div>
-            </div>
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="hero-impact">どんな課題だって、</span><br>
-                    <span class="hero-tech">このテクノロジーで</span>
-                    <span class="hero-action">乗り越えていく。</span>
-                </h1>
-                <p class="hero-description">
-                    AIとクラウドテクノロジーの力で、不可能を可能に変える。<br>
-                    <span class="hero-emphasis">革新的なソリューションが、あなたのビジネスを次のステージへと導きます。</span>
-                </p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary">サービスを見る</button>
-                    <button class="btn btn-secondary">お問い合わせ</button>
-                </div>
-            </div>
-            <div class="slideshow-controls">
-                <span class="slide-dot active" data-slide="0"></span>
-                <span class="slide-dot" data-slide="1"></span>
-                <span class="slide-dot" data-slide="2"></span>
-                <span class="slide-dot" data-slide="3"></span>
-            </div>
-            <div class="scroll-indicator">
-                <span class="scroll-text">Scroll</span>
-                <div class="scroll-arrow"></div>
-            </div>
-        </section>
+      <section class="hero" id="store">
+        <div class="collage">
+          <figure class="collage-item" data-style="wide">
+            <img src="画像/カルーセル/P1036574.JPG" alt="Sauna Crown ハットの質感" />
+            <figcaption>deep fit</figcaption>
+          </figure>
+          <figure class="collage-item" data-style="portrait">
+            <img src="画像/カルーセル/P1047830.JPG" alt="サウナで整うサウナー" />
+            <figcaption>ritual</figcaption>
+          </figure>
+          <figure class="collage-item" data-style="square">
+            <img src="画像/カルーセル/メイン.jpg" alt="サウナクラウンのカラー" />
+            <figcaption>color lab</figcaption>
+          </figure>
+          <figure class="collage-item" data-style="wide">
+            <img src="画像/カルーセル/選ばれる理由.png" alt="サウナハットのディテール" />
+            <figcaption>detail</figcaption>
+          </figure>
+          <figure class="collage-item" data-style="square">
+            <img src="画像/カルーセル/WqrcIfv1RJ_qW-HeDFryR_f36cc1d2ce844972adc92aa61f55e092.png" alt="サウナフェスで映えるルック" />
+            <figcaption>fesaura</figcaption>
+          </figure>
+          <figure class="collage-item" data-style="square">
+            <img src="画像/カルーセル/１のコピー28.jpg" alt="テントサウナとの相性" />
+            <figcaption>outdoor</figcaption>
+          </figure>
+          <figure class="collage-item" data-style="portrait" data-fit="contain">
+            <img src="画像/カルーセル/没の方.png" alt="ロウリュの蒸気" />
+            <figcaption>steam</figcaption>
+          </figure>
+          <figure class="collage-item" data-style="portrait" data-fit="contain">
+            <img src="画像/カルーセル/１のコピー7.png" alt="Sauna Crown グラフィック" />
+            <figcaption>gear</figcaption>
+          </figure>
+        </div>
+        <div class="hero-text fade-up">
+          <small>Sauna Crown is sauna hat brand from Japan</small>
+          <h1>
+            <span>サ室もサウナハットも、</span>
+            <span>Sauna Crownが熱い。</span>
+          </h1>
+          <p>
+            常設常湿のサウナ室でもテントサウナでも、目元まで沈める没入シルエットと“サウナ専用カラー”で整う時間をデザインします。
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="https://www.amazon.co.jp/stores/SaunaCrown/page/FA0B8FF3-03C7-4098-9A84-69EEEC456238" target="_blank" rel="noopener">Amazon Brand Store</a>
+            <a class="btn btn-outline" href="#media">Media Pick</a>
+          </div>
+        </div>
+      </section>
 
-        <!-- サービスセクション -->
-        <section id="services" class="services">
-            <div class="container">
-                <h2 class="section-title">Our Services</h2>
-                <div class="circular-carousel">
-                    <!-- 円形軌道上の装飾アイコン -->
-                    <div class="orbit-icons">
-                        <div class="orbit-icon" style="--angle: 0deg;">
-                            <div class="icon-wrapper">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="orbit-icon" style="--angle: 45deg;">
-                            <div class="icon-wrapper">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="orbit-icon" style="--angle: 90deg;">
-                            <div class="icon-wrapper">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="orbit-icon" style="--angle: 135deg;">
-                            <div class="icon-wrapper">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M14.7 6.3A1 1 0 0 0 13 5H5A2 2 0 0 0 3 7V19A2 2 0 0 0 5 21H17A2 2 0 0 0 19 19V11A1 1 0 0 0 18.7 10.3L14.7 6.3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M14 6V10H18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="orbit-icon" style="--angle: 180deg;">
-                            <div class="icon-wrapper">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 22S8 18 8 13A4 4 0 0 1 16 13C16 18 12 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <circle cx="12" cy="13" r="2" stroke="currentColor" stroke-width="2"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="orbit-icon" style="--angle: 225deg;">
-                            <div class="icon-wrapper">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
-                                    <line x1="8" y1="21" x2="16" y2="21" stroke="currentColor" stroke-width="2"/>
-                                    <line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" stroke-width="2"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="orbit-icon" style="--angle: 270deg;">
-                            <div class="icon-wrapper">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Z" stroke="currentColor" stroke-width="2"/>
-                                    <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="orbit-icon" style="--angle: 315deg;">
-                            <div class="icon-wrapper">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 19C-2 12 4 2 9 2C13 2 13 6 11 8C16 10 21 6 19 15C17 13 17 10 16 10L9 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
+      <section class="info-strip fade-up" aria-label="ブランドインフォメーション">
+        <span>♨ 常設常湿 / Deep Sauna Gear</span>
+        <span>🧖‍♂ ユニセックス・ロングフィット</span>
+        <span>🔥 中価格帯の本格派</span>
+        <span>📦 Amazon ブランドストア出荷</span>
+      </section>
 
-                    <!-- 中央イラストエリア -->
-                    <div class="service-illustration"></div>
-                    
-                    <!-- 下部テキストエリア -->
-                    <div class="service-center">
-                        <div class="service-navigation">
-                            <button class="nav-btn prev-btn" onclick="rotateServices(-1, true)">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                            <button class="nav-btn next-btn" onclick="rotateServices(1, true)">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                        </div>
-
-                        <div class="service-display">
-                            <div class="service-number">01</div>
-                            <div class="service-content active" data-service="0">
-                                <h3>AI開発・機械学習</h3>
-                                <p>機械学習とディープラーニングを活用し、データから価値を創造する最先端のAIソリューションを提供します。予測分析、自然言語処理、画像認識など、幅広い分野でお客様のビジネスを革新します。</p>
-                                <button class="view-more-btn">VIEW MORE</button>
-                            </div>
-                            <div class="service-content" data-service="1">
-                                <h3>クラウドソリューション</h3>
-                                <p>AWS、Azure、GCPを活用したスケーラブルで安全なクラウドインフラを設計・構築します。コスト最適化、高可用性、セキュリティを重視し、お客様のビジネスの成長を技術面から支援します。</p>
-                                <button class="view-more-btn">VIEW MORE</button>
-                            </div>
-                            <div class="service-content" data-service="2">
-                                <h3>モバイルアプリ開発</h3>
-                                <p>ユーザー体験を最重視したiOS・Androidアプリを開発します。React Native、Flutterによるクロスプラットフォーム開発から、Swift、Kotlinによるネイティブ開発まで幅広く対応します。</p>
-                                <button class="view-more-btn">VIEW MORE</button>
-                            </div>
-                            <div class="service-content" data-service="3">
-                                <h3>サイバーセキュリティ</h3>
-                                <p>多層防御によるセキュリティ設計で、お客様の重要な資産を守ります。ペネトレーションテスト、脆弱性診断、セキュリティ監査を通じて、継続的なセキュリティ向上を実現します。</p>
-                                <button class="view-more-btn">VIEW MORE</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <section class="concept fade-up" id="concept">
+        <span class="section-eyebrow">Concept</span>
+        <h2 class="section-title">常設常湿で、贅沢な癒し体験を日常に。</h2>
+        <div class="scrap-grid">
+          <article class="scrap-card">
+            <div class="scrap-image">
+              <img src="画像/コンセプト/没入シルエット.png" alt="没入シルエット" />
             </div>
-        </section>
-
-        <!-- ケーススタディセクション -->
-        <section id="case-studies" class="case-studies">
-            <div class="container">
-                <h2 class="section-title">Case Studies</h2>
-                <p class="section-subtitle">私たちが手がけた革新的なプロジェクトをご紹介します</p>
-                
-                <div class="case-studies-carousel">
-                    <div class="case-container">
-                        <div class="case-slides">
-                            <div class="case-slide active">
-                                <div class="case-card">
-                                    <div class="case-visual">
-                                        <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="AI予測システム">
-                                        <div class="case-overlay">
-                                            <span class="case-category">AI・機械学習</span>
-                                        </div>
-                                    </div>
-                                    <div class="case-content">
-                                        <h3>需要予測AIシステム</h3>
-                                        <p class="case-client">大手小売チェーン A社</p>
-                                        <p class="case-description">店舗の売上データと外部要因を分析し、商品需要を高精度で予測するAIシステムを開発。在庫最適化により年間20%のコスト削減を実現。</p>
-                                        <div class="case-results">
-                                            <div class="result-item">
-                                                <span class="result-value">20%</span>
-                                                <span class="result-label">コスト削減</span>
-                                            </div>
-                                            <div class="result-item">
-                                                <span class="result-value">95%</span>
-                                                <span class="result-label">予測精度</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="case-slide">
-                                <div class="case-card">
-                                    <div class="case-visual">
-                                        <img src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="クラウド移行">
-                                        <div class="case-overlay">
-                                            <span class="case-category">クラウド</span>
-                                        </div>
-                                    </div>
-                                    <div class="case-content">
-                                        <h3>大規模クラウド移行プロジェクト</h3>
-                                        <p class="case-client">金融機関 B社</p>
-                                        <p class="case-description">レガシーシステムを段階的にAWSクラウドへ移行。高可用性とセキュリティを確保しながら、運用コストを大幅に削減。</p>
-                                        <div class="case-results">
-                                            <div class="result-item">
-                                                <span class="result-value">40%</span>
-                                                <span class="result-label">運用コスト削減</span>
-                                            </div>
-                                            <div class="result-item">
-                                                <span class="result-value">99.9%</span>
-                                                <span class="result-label">可用性</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="case-slide">
-                                <div class="case-card">
-                                    <div class="case-visual">
-                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="モバイルアプリ">
-                                        <div class="case-overlay">
-                                            <span class="case-category">モバイル</span>
-                                        </div>
-                                    </div>
-                                    <div class="case-content">
-                                        <h3>次世代配送管理アプリ</h3>
-                                        <p class="case-client">物流企業 C社</p>
-                                        <p class="case-description">リアルタイム配送追跡とAI最適化ルーティングを搭載したモバイルアプリ。配送効率の大幅な向上を実現。</p>
-                                        <div class="case-results">
-                                            <div class="result-item">
-                                                <span class="result-value">30%</span>
-                                                <span class="result-label">配送時間短縮</span>
-                                            </div>
-                                            <div class="result-item">
-                                                <span class="result-value">50万+</span>
-                                                <span class="result-label">アクティブユーザー</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="case-navigation">
-                        <button class="case-nav-btn prev-btn" onclick="changeCaseSlide(-1)">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
-                        <div class="case-indicators">
-                            <span class="case-indicator active" onclick="goToCaseSlide(0)"></span>
-                            <span class="case-indicator" onclick="goToCaseSlide(1)"></span>
-                            <span class="case-indicator" onclick="goToCaseSlide(2)"></span>
-                        </div>
-                        <button class="case-nav-btn next-btn" onclick="changeCaseSlide(1)">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+            <h3>視線を遮断する没入シルエット</h3>
+            <p>目元まで深く下ろせる断面で光量を抑制。サ室でも外気浴でも呼吸と鼓動に集中できる“内省モード”を用意します。</p>
+          </article>
+          <article class="scrap-card">
+            <div class="scrap-image">
+              <img src="画像/コンセプト/サウナ専用カラー.png" alt="サウナ専用カラー" />
             </div>
-        </section>
-
-        <!-- 会社概要セクション -->
-        <section id="about" class="about">
-            <div class="about-bg-pattern">
-                <div class="pattern-layer pattern-1"></div>
-                <div class="pattern-layer pattern-2"></div>
-                <div class="pattern-overlay"></div>
+            <h3>カラーラボ発・サウナ専用カラー</h3>
+            <p>ウッド、蒸気、夜空。サウナの風景から抽出したトーンで、男女問わずかぶりやすいユニセックスなパレットを展開。</p>
+          </article>
+          <article class="scrap-card">
+            <div class="scrap-image">
+              <img src="画像/コンセプト/本格クオリティ.png" alt="本格クオリティ" />
             </div>
-            <div class="container">
-                <div class="about-content">
-                    <div class="about-text">
-                        <h2 class="section-title">About TechNova</h2>
-                        
-                        <div class="mission-statement">
-                            <h3 class="mission-title">私たちの使命</h3>
-                            <p class="mission-text">
-                                テクノロジーの力で、社会の課題を解決し、より良い未来を創造すること。それがTechNovaの存在意義です。
-                            </p>
-                        </div>
+            <h3>綿主体で洗える本格クオリティ</h3>
+            <p>綿100%を軸にしたタフな素材設計で、熱から頭部を守りつつ扱いやすさも確保。毎週サ活に通う人の相棒ギアです。</p>
+          </article>
+        </div>
+      </section>
 
-                        <div class="vision-section">
-                            <h3 class="vision-title">ビジョン</h3>
-                            <p class="about-description">
-                                2020年に設立されたTechNovaは、「Technology for Everyone」を理念に掲げ、すべての人がテクノロジーの恩恵を受けられる社会の実現を目指しています。
-                            </p>
-                            <p class="about-description">
-                                AI、クラウド、モバイル技術を通じて、企業のデジタル変革を支援するだけでなく、社会全体のイノベーションを促進し、持続可能な未来の構築に貢献します。
-                            </p>
-                        </div>
-
-                        <div class="values-section">
-                            <h3 class="values-title">私たちの価値観</h3>
-                            <div class="values-timeline">
-                                <div class="value-card">
-                                    <div class="value-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M12 2L13.09 8.26L17 5L14.74 9.74L22 12L14.74 14.26L17 19L13.09 15.74L12 22L10.91 15.74L7 19L9.26 14.26L2 12L9.26 9.74L7 5L10.91 8.26L12 2Z" fill="currentColor"/>
-                                        </svg>
-                                    </div>
-                                    <div class="value-content">
-                                        <h4>Innovation</h4>
-                                        <p>常に最先端の技術を追求し、革新的なソリューションを創造します。私たちは現状に満足することなく、未来を見据えた技術開発を行います。</p>
-                                    </div>
-                                </div>
-                                <div class="value-card">
-                                    <div class="value-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1H9V3H13.5L18.5 8H21ZM7 12V21C7 21.6 7.4 22 8 22H16C16.6 22 17 21.6 17 21V12L12 7L7 12Z" fill="currentColor"/>
-                                        </svg>
-                                    </div>
-                                    <div class="value-content">
-                                        <h4>Collaboration</h4>
-                                        <p>お客様と共に課題に向き合い、持続的な成長を実現します。パートナーシップを重視し、共に成功を目指します。</p>
-                                    </div>
-                                </div>
-                                <div class="value-card">
-                                    <div class="value-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22L6.66 19.7C7.14 19.87 7.64 20 8 20C19 20 22 3 22 3C21 5 14 5.25 9 6.25C4 7.25 2 11.5 2 13.5C2 15.5 3.75 17.25 3.75 17.25C7.5 14 12.5 16 16.5 18C20.5 20 22 18.5 22 18.5C22 18.5 21 20 17 18Z" fill="currentColor"/>
-                                        </svg>
-                                    </div>
-                                    <div class="value-content">
-                                        <h4>Sustainability</h4>
-                                        <p>環境と社会に配慮した技術開発で、未来世代に責任を果たします。持続可能な社会の実現に向けて行動します。</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="about-visual">
-                        <div class="about-image-container">
-                            <img src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="TechNovaオフィス風景" class="about-image">
-                            <div class="image-overlay">
-                                <div class="overlay-content">
-                                    <h4>革新的なワークスペース</h4>
-                                    <p>最新テクノロジーと快適な環境で、創造性を最大化</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <section class="media fade-up" id="media">
+        <span class="section-eyebrow">Media</span>
+        <h2 class="section-title">サウナ専門誌「SAUNABROS」に掲載されました。</h2>
+        <div class="media-feature">
+          <img src="画像/メディア掲載.png" alt="サウナブロス誌面" />
+          <div class="media-content">
+            <div class="media-label">
+              <span>MEDIA</span>
+              <span>SAUNABROS</span>
             </div>
-        </section>
+            <p>
+              サウナ専門誌『SAUNABROS』で、Sauna Crown のサウナハットが本格ギアとして紹介されました。
+            </p>
+            <p class="media-sub">
+              深くかぶれるシルエットや“サウナ専用カラー”へのこだわりが、サウナを愛する読者向けにピックアップされています。
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <!-- 技術イノベーションセクション -->
-        <section id="technology" class="technology">
-            <div class="container">
-                <h2 class="section-title">最先端技術</h2>
-                <p class="section-subtitle">未来を創造するテクノロジーとイノベーション</p>
-                
-                <div class="tech-showcase">
-                    <div class="tech-grid">
-                        <div class="tech-card main">
-                            <div class="tech-visual">
-                                <div class="tech-animation">
-                                    <div class="floating-elements">
-                                        <div class="element ai"></div>
-                                        <div class="element cloud"></div>
-                                        <div class="element data"></div>
-                                    </div>
-                                </div>
-                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="AI技術" class="tech-image">
-                            </div>
-                            <div class="tech-content">
-                                <h3>AI & 機械学習</h3>
-                                <p>最新のAI技術でビジネスプロセスの自動化と最適化を実現。効率的なソリューションを提供します。</p>
-                            </div>
-                        </div>
-                        
-                        <div class="tech-card">
-                            <div class="tech-visual">
-                                <img src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="クラウド技術" class="tech-image">
-                            </div>
-                            <div class="tech-content">
-                                <h3>クラウドアーキテクチャ</h3>
-                                <p>AWS、Azure、GCPを活用したスケーラブルなクラウドアーキテクチャを設計・構築します。</p>
-                            </div>
-                        </div>
-                        
-                        <div class="tech-card">
-                            <div class="tech-visual">
-                                <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="データサイエンス" class="tech-image">
-                            </div>
-                            <div class="tech-content">
-                                <h3>データサイエンス</h3>
-                                <p>ビッグデータ解析と機械学習による予測モデルで、データドリブンな意思決定を支援します。</p>
-                            </div>
-                        </div>
-                        
-                        <div class="tech-card">
-                            <div class="tech-visual">
-                                <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="ブロックチェーン" class="tech-image">
-                            </div>
-                            <div class="tech-content">
-                                <h3>ブロックチェーン</h3>
-                                <p>セキュアで透明性の高いブロックチェーン技術による、次世代デジタルトランザクションシステム。</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <section class="lineup fade-up" id="lineup">
+        <span class="section-eyebrow">Lineup</span>
+        <h2 class="section-title">Sauna Crown Gear Line</h2>
+        <div class="lineup-grid">
+          <article class="lineup-item">
+            <span class="tag">Deep Fit</span>
+            <figure>
+              <img src="画像/Gear　Line/1.jpg" alt="Deep Shade ブラック" />
+            </figure>
+            <h3>Deep Shade / Black</h3>
+            <p>ロウリュの熱を遮りやすい厚手設計。視界を落として没入したい本格サウナーに向けた定番ブラック。</p>
+            <div class="price">¥6,800</div>
+            <a class="btn btn-outline" href="#">Buy on Amazon</a>
+          </article>
+          <article class="lineup-item">
+            <span class="tag">Festival</span>
+            <figure>
+              <img src="画像/Gear　Line/2.jpg" alt="Glacier Moss グリーン" />
+            </figure>
+            <h3>Glacier Moss / Green</h3>
+            <p>サウナフェスや外気浴の芝生にも馴染む青みグリーン。写真映えするアクセントカラー。</p>
+            <div class="price">¥7,200</div>
+            <a class="btn btn-outline" href="#">Buy on Amazon</a>
+          </article>
+          <article class="lineup-item">
+            <span class="tag">Limited</span>
+            <figure>
+              <img src="画像/Gear　Line/3.jpg" alt="Sand Silence ベージュ" />
+            </figure>
+            <h3>Sand Silence / Beige</h3>
+            <p>ウッドベンチやタープと馴染む柔らかなベージュ。ユニセックスにかぶれる落ち着いたトーンです。</p>
+            <div class="price">¥7,800</div>
+            <a class="btn btn-outline" href="#">Buy on Amazon</a>
+          </article>
+          <article class="lineup-item">
+            <span class="tag">New</span>
+            <figure>
+              <img src="画像/Gear　Line/4.png" alt="Prism Mist ホワイト" />
+            </figure>
+            <h3>Prism Mist / White</h3>
+            <p>夜サウナの照明でさりげなく光るミストホワイト。軽快な被り心地で女性サウナーにも人気。</p>
+            <div class="price">¥7,400</div>
+            <a class="btn btn-outline" href="#">Buy on Amazon</a>
+          </article>
+        </div>
+        <div class="lineup-more">
+          <a class="btn btn-outline" href="https://www.amazon.co.jp/stores/SaunaCrown/page/FA0B8FF3-03C7-4098-9A84-69EEEC456238" target="_blank" rel="noopener">All Items / すべての商品を見る</a>
+        </div>
+      </section>
 
-        <!-- お問い合わせセクション -->
-        <section id="contact" class="contact">
-            <div class="container">
-                <h2 class="section-title">Contact Us</h2>
-                <div class="contact-wrapper">
-                    <div class="contact-info-card">
-                        <div class="contact-header">
-                            <h3>プロジェクトを始めましょう</h3>
-                            <p>革新的なソリューションで、あなたのビジネスを次のステージへ。</p>
-                        </div>
-                        
-                        <div class="contact-methods">
-                            <div class="contact-method">
-                                <div class="method-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M3 5C3 3.9 3.9 3 5 3H19C20.1 3 21 3.9 21 5V19C21 20.1 20.1 21 19 21H5C3.9 21 3 20.1 3 19V5ZM5 7L12 13L19 7V5L12 11L5 5V7Z" fill="currentColor"/>
-                                    </svg>
-                                </div>
-                                <div class="method-content">
-                                    <h4>メール</h4>
-                                    <p>info@technova.com</p>
-                                    <span class="response-time">24時間以内に返信</span>
-                                </div>
-                            </div>
-                            
-                            <div class="contact-method">
-                                <div class="method-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M6.62 10.79C8.06 13.62 10.38 15.94 13.21 17.38L15.41 15.18C15.68 14.91 16.08 14.82 16.43 14.93C17.55 15.3 18.75 15.5 20 15.5C20.55 15.5 21 15.95 21 16.5V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.09 8.32 8.82 8.59L6.62 10.79Z" fill="currentColor"/>
-                                    </svg>
-                                </div>
-                                <div class="method-content">
-                                    <h4>電話</h4>
-                                    <p>03-1234-5678</p>
-                                    <span class="response-time">平日 9:00-18:00</span>
-                                </div>
-                            </div>
-                            
-                            <div class="contact-method">
-                                <div class="method-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9S10.62 6.5 12 6.5S14.5 7.62 14.5 9S13.38 11.5 12 11.5Z" fill="currentColor"/>
-                                    </svg>
-                                </div>
-                                <div class="method-content">
-                                    <h4>オフィス</h4>
-                                    <p>東京都渋谷区恵比寿1-1-1</p>
-                                    <span class="response-time">事前予約制</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="social-connect">
-                            <h4>ソーシャルメディア</h4>
-                            <div class="social-links">
-                                <a href="#" class="social-btn">LinkedIn</a>
-                                <a href="#" class="social-btn">Twitter</a>
-                                <a href="#" class="social-btn">GitHub</a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-form-card">
-                        <form class="modern-contact-form">
-                            <div class="form-header">
-                                <h3>プロジェクトについて教えてください</h3>
-                                <p>詳細をお聞かせいただければ、最適なソリューションをご提案します。</p>
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="floating-input">
-                                    <input type="text" id="firstName" name="firstName" required>
-                                    <label for="firstName">お名前</label>
-                                </div>
-                                <div class="floating-input">
-                                    <input type="email" id="email" name="email" required>
-                                    <label for="email">メールアドレス</label>
-                                </div>
-                            </div>
-                            
-                            <div class="floating-input">
-                                <input type="text" id="company" name="company">
-                                <label for="company">会社名（任意）</label>
-                            </div>
-                            
-                            <div class="service-selection">
-                                <label class="selection-label">興味のあるサービス</label>
-                                <div class="service-options">
-                                    <label class="service-option">
-                                        <input type="checkbox" name="services" value="ai">
-                                        <span class="checkmark"></span>
-                                        AI開発
-                                    </label>
-                                    <label class="service-option">
-                                        <input type="checkbox" name="services" value="cloud">
-                                        <span class="checkmark"></span>
-                                        クラウドソリューション
-                                    </label>
-                                    <label class="service-option">
-                                        <input type="checkbox" name="services" value="mobile">
-                                        <span class="checkmark"></span>
-                                        モバイルアプリ開発
-                                    </label>
-                                    <label class="service-option">
-                                        <input type="checkbox" name="services" value="security">
-                                        <span class="checkmark"></span>
-                                        セキュリティ
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div class="floating-input">
-                                <textarea id="projectDetails" name="projectDetails" rows="4" required></textarea>
-                                <label for="projectDetails">プロジェクトの詳細</label>
-                            </div>
-                            
-                            <button type="submit" class="submit-btn">
-                                <span class="btn-text">プロジェクトを開始</span>
-                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <section class="concept-visual fade-up" aria-labelledby="concept-visual-title">
+        <span class="section-eyebrow">Concept</span>
+        <h2 class="section-title" id="concept-visual-title">Sauna Crownの世界観をそのまま被る。</h2>
+        <figure>
+          <img src="画像/ブランドイメージ.png" alt="Sauna Crown ブランドイメージ" />
+        </figure>
+      </section>
+
+      <section class="issues fade-up" id="issues">
+        <span class="section-eyebrow">Issues / Journal</span>
+        <h2 class="section-title">整うメカニズムを掘る、Sauna Crownの視点。</h2>
+        <div class="issues-grid">
+          <article class="issue-card">
+            <small class="tag">ISSUE 01</small>
+            <figure class="issue-thumb">
+              <img src="https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea?auto=format&fit=crop&w=800&q=80" alt="熱気が立ち上るサウナ室" loading="lazy" />
+            </figure>
+            <h4>整うって結局なに？自律神経へのアプローチ</h4>
+            <p>交感神経と副交感神経の波をどうサポートするか。Sauna Crownの深被り設計を解剖。</p>
+            <a class="btn btn-outline" href="issues/autonomic.html">Read More</a>
+          </article>
+          <article class="issue-card">
+            <small class="tag">ISSUE 02</small>
+            <figure class="issue-thumb">
+              <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80" alt="テントサウナの熱気" loading="lazy" />
+            </figure>
+            <h4>テントサウナで頭部を守る理由</h4>
+            <p>ロウリュ熱の直撃から頭部を逃がすギアとして、サウナハットの役割を検証。</p>
+            <a class="btn btn-outline" href="issues/tent.html">Read More</a>
+          </article>
+          <article class="issue-card">
+            <small class="tag">JOURNAL</small>
+            <figure class="issue-thumb">
+              <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=800&q=80" alt="サウナハットを手に取るシーン" loading="lazy" />
+            </figure>
+            <h4>サウナハットの選び方 3つのポイント</h4>
+            <p>シルエット・素材・カラー。通サウナー目線で押さえるべき指標をピックアップ。</p>
+            <a class="btn btn-outline" href="issues/choice.html">Read More</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="cta fade-up" id="cta">
+        <h2 class="section-title">あなたの“ととのう時間”に、Sauna Crownを。</h2>
+        <p>
+          本格的にサウナを楽しみたい。でも、おしゃれさも妥協したくない。Sauna Crownはそんなサウナーのためのサウナハットをラインナップしています。
+        </p>
+        <div class="hero-actions" style="margin-top: 24px;">
+          <a class="btn" href="https://www.amazon.co.jp/stores/SaunaCrown/page/FA0B8FF3-03C7-4098-9A84-69EEEC456238" target="_blank" rel="noopener">Sauna Crown のAmazonストアへ</a>
+        </div>
+      </section>
     </main>
 
-    <!-- フッター -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-main">
-                <div class="footer-brand">
-                    <div class="logo">
-                        <div class="logo-icon">
-                            <div class="logo-cube"></div>
-                            <div class="logo-cube"></div>
-                            <div class="logo-cube"></div>
-                            <div class="logo-cube"></div>
-                        </div>
-                        <span class="logo-text">TechNova</span>
-                    </div>
-                    <p class="footer-tagline">革新的なテクノロジーで、未来を創造する</p>
-                </div>
-                
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>ソリューション</h4>
-                        <ul>
-                            <li><a href="#services">AI開発</a></li>
-                            <li><a href="#services">クラウド移行</a></li>
-                            <li><a href="#services">モバイルアプリ</a></li>
-                            <li><a href="#case-studies">実績</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="footer-column">
-                        <h4>企業情報</h4>
-                        <ul>
-                            <li><a href="#about">会社概要</a></li>
-                            <li><a href="#technology">技術</a></li>
-                            <li><a href="#contact">採用情報</a></li>
-                            <li><a href="#contact">ニュース</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="footer-column">
-                        <h4>サポート</h4>
-                        <ul>
-                            <li><a href="#contact">お問い合わせ</a></li>
-                            <li><a href="#contact">技術サポート</a></li>
-                            <li><a href="#contact">パートナー</a></li>
-                            <li><a href="#contact">プライバシー</a></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="footer-cta">
-                    <h4>プロジェクトを始めませんか？</h4>
-                    <p>革新的なソリューションで、あなたのビジネスを次のレベルへ</p>
-                    <a href="#contact" class="footer-btn">
-                        相談する
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <div class="footer-bottom-content">
-                    <p>&copy; 2024 TechNova. All rights reserved.</p>
-                    <div class="footer-social">
-                        <a href="#" class="social-icon">LinkedIn</a>
-                        <a href="#" class="social-icon">Twitter</a>
-                        <a href="#" class="social-icon">GitHub</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <footer>
+      <div class="logo" style="margin-bottom: 12px;">
+        <img src="ロゴ/s-nega.jpg" alt="Sauna Crown ロゴ" class="logo-img" style="height: 28px;" />
+        <span>SAUNA CROWN</span>
+      </div>
+      <div class="footer-links">
+        <a href="#store">Store</a>
+        <a href="#concept">Concept</a>
+        <a href="#media">Media</a>
+        <a href="issues/index.html">Issues</a>
+        <a href="#lineup">Lineup</a>
+      </div>
+      <small>© Sauna Crown 2025</small>
     </footer>
 
-    <script src="script.js?v=GLASSMORPHISM-REDESIGN-20241217-160000&t=1734460000"></script>
-</body>
+    <script>
+      (() => {
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => section.classList.add('fade-up'));
+
+        const observer = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+              }
+            });
+          },
+          { threshold: 0.2 }
+        );
+
+        sections.forEach(section => observer.observe(section));
+
+        const hamburger = document.querySelector('.hamburger');
+        const mobileNav = document.querySelector('.mobile-nav');
+        hamburger?.addEventListener('click', () => {
+          mobileNav.classList.toggle('open');
+        });
+
+        mobileNav?.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => mobileNav.classList.remove('open'));
+        });
+      })();
+    </script>
+  </body>
 </html>
