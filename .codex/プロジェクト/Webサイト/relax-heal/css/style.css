@@ -155,13 +155,14 @@ img {
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   padding: 0;
 }
 
 @media (min-width: 1024px) {
   .carousel-window {
-    height: clamp(360px, 60vh, 520px);
+    height: clamp(420px, 65vh, 560px);
+    overflow: hidden;
   }
 }
 
@@ -195,6 +196,23 @@ img {
   background: #fff;
 }
 
+/* PC: 正方形中央配置 + 左右にカード表示 */
+@media (min-width: 1024px) {
+  .carousel-track {
+    gap: 24px;
+    justify-content: flex-start;
+  }
+
+  .carousel-slide {
+    width: 560px;
+    height: 100%;
+  }
+
+  .carousel-slide img {
+    object-fit: cover;
+  }
+}
+
 .carousel-slide.no-text img {
   height: 100%;
   border-radius: 26px;
@@ -206,16 +224,6 @@ img {
 
 .carousel-slide::after {
   display: none;
-}
-
-/* PC用カルーセル高さ調整 */
-@media (min-width: 1024px) {
-  .carousel-slide {
-    height: 100%;
-  }
-  .carousel-slide img {
-    object-fit: cover;
-  }
 }
 
 .slide-label {
@@ -537,7 +545,7 @@ img {
 .series-rect img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   background: #fff;
 }
 
@@ -626,22 +634,23 @@ img {
 
 .media-magazine-card {
   display: flex;
-  flex-direction: row-reverse;
-  gap: 24px;
-  border-radius: 24px;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 20px;
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 20px 40px rgba(20, 45, 70, 0.08);
   background: #fff;
-  padding: 24px;
-  align-items: center;
+  padding: 20px;
+  align-items: flex-start;
 }
 
 .magazine-images {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 160px));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   align-items: flex-start;
-  max-width: 360px;
+  max-width: 480px;
 }
 
 .magazine-images img {
@@ -654,53 +663,51 @@ img {
 }
 
 .magazine-copy {
-  flex: 1;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   color: var(--text);
-  padding: 16px 0;
+  padding: 0;
 }
 
 .magazine-copy h3 {
-  font-size: 1.05rem;
-  line-height: 1.4;
-  margin-bottom: 4px;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  margin-bottom: 2px;
 }
 
 .magazine-copy p {
-  font-size: 0.88rem;
-  line-height: 1.6;
+  font-size: 0.82rem;
+  line-height: 1.5;
   margin: 0;
 }
 
 .magazine-copy .eyebrow {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
 }
 
 @media (max-width: 700px) {
   .media-magazine-card {
-    flex-direction: row;
-    gap: 16px;
-    padding: 18px;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
   }
   .magazine-images {
-    flex: 1;
-    grid-template-columns: 1fr;
-    max-width: 140px;
+    grid-template-columns: 1fr 1fr;
+    max-width: 100%;
   }
   .magazine-copy {
-    flex: 1;
-    gap: 4px;
-    padding: 8px 0;
+    gap: 3px;
+    padding: 0;
   }
   .magazine-copy h3 {
-    font-size: 0.88rem;
-    line-height: 1.35;
+    font-size: 0.85rem;
+    line-height: 1.3;
   }
   .magazine-copy p {
-    font-size: 0.8rem;
-    line-height: 1.5;
+    font-size: 0.76rem;
+    line-height: 1.45;
   }
 }
 
@@ -1228,7 +1235,7 @@ img {
   .series-mobile-item img {
     width: 100%;
     height: auto;
-    object-fit: contain;
+    object-fit: cover;
     display: block;
   }
 

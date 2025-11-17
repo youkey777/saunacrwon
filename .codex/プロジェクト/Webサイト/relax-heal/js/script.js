@@ -45,9 +45,19 @@ document.addEventListener("DOMContentLoaded", () => {
       return slides[currentIndex]?.offsetWidth || 0;
     };
 
+    const getGap = () => {
+      const trackStyle = window.getComputedStyle(track);
+      return parseFloat(trackStyle.gap) || 0;
+    };
+
     const updateCarousel = (withTransition = true) => {
       const slideWidth = getSlideWidth();
-      const offset = currentIndex * slideWidth;
+      const gap = getGap();
+      const windowWidth = windowEl.offsetWidth;
+
+      // PC版: 中央配置のためのオフセット計算
+      const centerOffset = (windowWidth - slideWidth) / 2;
+      const offset = (currentIndex * (slideWidth + gap)) - centerOffset;
 
       if (withTransition) {
         track.style.transition = "transform 0.6s ease";
