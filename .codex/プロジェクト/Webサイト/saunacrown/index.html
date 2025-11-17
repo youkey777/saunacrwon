@@ -207,7 +207,7 @@
         border: 2px solid rgba(255, 255, 255, 0.2);
         box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
         transition: transform 0.6s ease, filter 0.6s ease;
-        background: #050505;
+        background: #1a1a1a;
         padding: 6px;
       }
 
@@ -294,8 +294,7 @@
       }
 
       .collage-item[data-fit="contain"] img {
-        object-fit: contain;
-        background: #050505;
+        object-fit: cover;
       }
 
       .hero-text {
@@ -614,6 +613,10 @@
         text-align: center;
       }
 
+      .lineup-desc-short {
+        display: none;
+      }
+
       .issues-grid {
         display: grid;
         gap: 24px;
@@ -691,13 +694,15 @@
 
       @media (max-width: 768px) {
         .hero {
-          min-height: 110vh;
+          min-height: 100vh;
+          padding: 72px 12px 40px;
         }
 
         .collage {
-          min-height: 90vh;
-          transform: scale(0.75);
+          min-height: 100vh;
+          transform: none;
           transform-origin: top center;
+          margin-inline: -12px;
         }
 
         .media {
@@ -719,31 +724,33 @@
 
         .scrap-grid {
           grid-template-columns: 1fr;
-          gap: 16px;
+          gap: 20px;
         }
 
         .scrap-card {
-          padding: 12px;
-          flex-direction: row;
-          align-items: center;
-          gap: 12px;
-          min-height: 200px;
+          padding: 14px 12px;
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          align-items: stretch;
+          gap: 14px;
+          min-height: auto;
         }
 
         .scrap-image {
-          width: 253px;
-          height: 190px;
+          width: 100%;
+          height: 100%;
           aspect-ratio: 4 / 3;
           margin-bottom: 0;
-          flex-shrink: 0;
         }
 
         .scrap-card h3 {
-          font-size: 0.9rem;
+          font-size: 0.95rem;
+          line-height: 1.5;
         }
 
         .scrap-card p {
-          font-size: 0.8rem;
+          font-size: 0.82rem;
+          line-height: 1.6;
         }
 
         .concept-visual figure {
@@ -757,6 +764,14 @@
 
         .lineup-item {
           padding: 12px;
+        }
+
+        .lineup-desc {
+          display: none;
+        }
+
+        .lineup-desc-short {
+          display: block;
         }
 
         .issues-grid {
@@ -785,6 +800,11 @@
 
         .hero-text p {
           font-size: 0.85rem;
+        }
+
+        .concept-visual-line1,
+        .concept-visual-line2 {
+          display: block;
         }
       }
     </style>
@@ -944,7 +964,8 @@
               <img src="画像/Gear　Line/1.jpg" alt="Deep Shade ブラック" />
             </figure>
             <h3>Deep Shade / Black</h3>
-            <p>目元を落として集中できるロングシルエット。熱波中も没入したい本格サウナーに。</p>
+            <p class="lineup-desc">目元を落として集中できるロングシルエット。熱波中も没入したい本格サウナーに。</p>
+            <p class="lineup-desc-short">目元まで沈めて没入。本格サウナー向け。</p>
             <div class="price">¥6,800</div>
             <a class="btn btn-outline" href="#">Buy on Amazon</a>
           </article>
@@ -988,7 +1009,10 @@
 
       <section class="concept-visual" aria-labelledby="concept-visual-title">
         <span class="section-eyebrow">Concept</span>
-        <h2 class="section-title" id="concept-visual-title">Sauna Crown の世界観をまるごと体感。</h2>
+        <h2 class="section-title" id="concept-visual-title">
+          <span class="concept-visual-line1">Sauna Crown の</span>
+          <span class="concept-visual-line2">世界観をまるごと体感。</span>
+        </h2>
         <figure>
           <img src="画像/ブランドイメージ.png" alt="Sauna Crown ブランドイメージ" />
         </figure>
