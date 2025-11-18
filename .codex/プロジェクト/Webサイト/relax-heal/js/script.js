@@ -3,7 +3,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   // =========================
-  // Hero carousel (infinite loop, always scrolling right)
+  // Hero carousel (true infinite loop)
   // =========================
   const carousel = document.querySelector(".hero-carousel");
   const track = carousel?.querySelector(".carousel-track");
@@ -39,10 +39,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const slides = Array.from(track.children);
     let currentIndex = 1; // start at first real slide
-    let isAnimating = false;
+    let isTransitioning = false;
+    let autoScrollInterval = null;
 
     const getSlideWidth = () => {
-      return slides[currentIndex]?.offsetWidth || 0;
+      return slides[0]?.offsetWidth || 0;
     };
 
     const getGap = () => {
@@ -55,16 +56,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const gap = getGap();
       const windowWidth = windowEl.offsetWidth;
 
-      // PC版: 中央配置のためのオフセット計算
+      // 中央配置のためのオフセット計算
       const centerOffset = (windowWidth - slideWidth) / 2;
-      const offset = (currentIndex * (slideWidth + gap)) - centerOffset;
+      const offset = currentIndex * (slideWidth + gap) - centerOffset;
 
-      if (withTransition) {
-        track.style.transition = "transform 0.6s ease";
-      } else {
-        track.style.transition = "none";
-      }
-
+      track.style.transition = withTransition ? "transform 0.6s ease" : "none";
       track.style.transform = `translateX(-${offset}px)`;
 
       // update dots (クローンを除外した実際のインデックス)
@@ -79,50 +75,116 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     };
 
-    const goToIndex = (index) => {
-      if (isAnimating) return;
-      isAnimating = true;
-      currentIndex = index;
+    const move = (direction) => {
+      if (isTransitioning) return;
+
+      isTransitioning = true;
+      currentIndex = direction === 'next' ? currentIndex + 1 : currentIndex - 1;
       updateCarousel(true);
     };
+
+    const goNext = () => move('next');
+    const goPrev = () => move('prev');
 
     // 初期表示
     updateCarousel(false);
 
-    // ボタンイベント
-    nextBtn.addEventListener("click", () => {
-      goToIndex(currentIndex + 1);
-    });
-
-    prevBtn.addEventListener("click", () => {
-      goToIndex(currentIndex - 1);
-    });
-
     // transitionend で無限ループを実現
-    track.addEventListener("transitionend", () => {
+    track.addEventListener("transitionend", (e) => {
+      // transformプロパティの変化のみを処理
+      if (e.propertyName !== 'transform') return;
+
+      // 必ずisTransitioningをfalseに戻す
+      isTransitioning = false;
+
       const currentSlide = slides[currentIndex];
       if (currentSlide && currentSlide.classList.contains("is-clone")) {
+        // クローンに到達したら瞬間移動
         if (currentIndex === slides.length - 1) {
-          // moved to firstClone -> jump to first real slide
+          // firstClone → 本物のslide1へ
           currentIndex = 1;
         } else if (currentIndex === 0) {
-          // moved to lastClone -> jump to last real slide
+          // lastClone → 本物の最後のスライドへ
           currentIndex = slideCount;
         }
-        updateCarousel(false);
 
-        // 次のフレームでtransitionを復元
-        requestAnimationFrame(() => {
-          track.style.transition = "transform 0.6s ease";
+        // transitionなしで瞬間移動
+        track.style.transition = "none";
+        const slideWidth = getSlideWidth();
+        const gap = getGap();
+        const windowWidth = windowEl.offsetWidth;
+        const centerOffset = (windowWidth - slideWidth) / 2;
+        const offset = currentIndex * (slideWidth + gap) - centerOffset;
+        track.style.transform = `translateX(-${offset}px)`;
+
+        // ドットとactive classを更新
+        const realIndex = (currentIndex - 1 + slideCount) % slideCount;
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("active", i === realIndex);
+        });
+        slides.forEach((slide, index) => {
+          slide.classList.toggle("active", index === currentIndex);
         });
       }
-      isAnimating = false;
     });
+
+    // 長押しで連続スクロール
+    const startAutoScroll = (direction) => {
+      if (autoScrollInterval) return;
+
+      // 最初の1回を即座に実行
+      if (direction === 'next') {
+        goNext();
+      } else {
+        goPrev();
+      }
+
+      // 以降は一定間隔で実行
+      autoScrollInterval = setInterval(() => {
+        if (direction === 'next') {
+          goNext();
+        } else {
+          goPrev();
+        }
+      }, 400);
+    };
+
+    const stopAutoScroll = () => {
+      if (autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = null;
+      }
+    };
+
+    // Next button
+    nextBtn.addEventListener("mousedown", () => startAutoScroll('next'));
+    nextBtn.addEventListener("mouseup", stopAutoScroll);
+    nextBtn.addEventListener("mouseleave", stopAutoScroll);
+    nextBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      startAutoScroll('next');
+    });
+    nextBtn.addEventListener("touchend", stopAutoScroll);
+    nextBtn.addEventListener("touchcancel", stopAutoScroll);
+
+    // Prev button
+    prevBtn.addEventListener("mousedown", () => startAutoScroll('prev'));
+    prevBtn.addEventListener("mouseup", stopAutoScroll);
+    prevBtn.addEventListener("mouseleave", stopAutoScroll);
+    prevBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      startAutoScroll('prev');
+    });
+    prevBtn.addEventListener("touchend", stopAutoScroll);
+    prevBtn.addEventListener("touchcancel", stopAutoScroll);
 
     // ドットクリック
     dots.forEach((dot, dotIndex) => {
       dot.addEventListener("click", () => {
-        goToIndex(dotIndex + 1); // +1 because of leading clone
+        if (isTransitioning) return;
+        isTransitioning = true;
+        currentIndex = dotIndex + 1; // +1 because of leading clone
+        updateCarousel(true);
       });
     });
 
@@ -137,10 +199,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================
-  // Category panel accordion
+  // Category panel accordion (PC only)
   // =========================
   const categoryButtons = document.querySelectorAll(
-    ".category-panel .category-item > button, .category-panel-mobile .category-item > button"
+    ".category-panel .category-item > button"
   );
 
   categoryButtons.forEach((button) => {
@@ -160,8 +222,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // open default category if marked
-  const defaultOpenItems = document.querySelectorAll(".category-item.is-open");
+  // open default category if marked (PC only)
+  const defaultOpenItems = document.querySelectorAll(".category-panel .category-item.is-open");
   defaultOpenItems.forEach((defaultOpenItem) => {
     const defaultButton = defaultOpenItem.querySelector("button");
     const defaultContent = defaultOpenItem.querySelector("ul");
