@@ -3,22 +3,21 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   // =========================
-  // Hero carousel (true infinite loop)
+  // Hero carousel (infinite loop + center-aligned)
   // =========================
   const carousel = document.querySelector(".hero-carousel");
   const track = carousel?.querySelector(".carousel-track");
   const windowEl = carousel?.querySelector(".carousel-window");
-  const prevBtn = carousel?.querySelector(".carousel-btn.prev");
   const nextBtn = carousel?.querySelector(".carousel-btn.next");
   const dotsContainer = carousel?.querySelector(".carousel-dots");
 
-  if (carousel && track && windowEl && prevBtn && nextBtn && dotsContainer) {
-    const originalSlides = Array.from(track.children);
-    const slideCount = originalSlides.length;
+  if (carousel && track && windowEl && nextBtn && dotsContainer) {
+    let slides = Array.from(track.children);
+    const slideCount = slides.length;
 
     // create dots
     dotsContainer.innerHTML = "";
-    originalSlides.forEach((_, index) => {
+    slides.forEach((_, index) => {
       const dot = document.createElement("button");
       dot.type = "button";
       dot.className = "carousel-dot";
@@ -29,180 +28,132 @@ document.addEventListener("DOMContentLoaded", () => {
     const dots = Array.from(dotsContainer.children);
 
     // clone first & last slide for seamless loop
-    const lastClone = originalSlides[slideCount - 1].cloneNode(true);
-    const firstClone = originalSlides[0].cloneNode(true);
-    lastClone.classList.add("is-clone");
+    const firstClone = slides[0].cloneNode(true);
+    const lastClone = slides[slides.length - 1].cloneNode(true);
     firstClone.classList.add("is-clone");
-
-    track.insertBefore(lastClone, originalSlides[0]);
+    lastClone.classList.add("is-clone");
     track.appendChild(firstClone);
+    track.insertBefore(lastClone, slides[0]);
 
-    const slides = Array.from(track.children);
-    let currentIndex = 1; // start at first real slide
-    let isTransitioning = false;
-    let autoScrollInterval = null;
+    slides = Array.from(track.children);
 
-    const getSlideWidth = () => {
-      return slides[0]?.offsetWidth || 0;
-    };
+    let currentIndex = 1; // because of leading clone
+    let isAnimating = false;
+    let autoPlayInterval = null;
 
-    const getGap = () => {
-      const trackStyle = window.getComputedStyle(track);
-      return parseFloat(trackStyle.gap) || 0;
-    };
+    const updateCarousel = () => {
+      const activeSlide = slides[currentIndex];
+      if (!activeSlide || !windowEl) return;
 
-    const updateCarousel = (withTransition = true) => {
-      const slideWidth = getSlideWidth();
-      const gap = getGap();
+      const slideWidth = activeSlide.offsetWidth;
+      const slideLeft = activeSlide.offsetLeft;
       const windowWidth = windowEl.offsetWidth;
 
-      // 中央配置のためのオフセット計算
-      const centerOffset = (windowWidth - slideWidth) / 2;
-      const offset = currentIndex * (slideWidth + gap) - centerOffset;
+      // スライド中央 - ウィンドウ中央 の差分を求める
+      const offset = slideLeft + slideWidth / 2 - windowWidth / 2;
+      track.style.transform = `translateX(${-offset}px)`;
 
-      track.style.transition = withTransition ? "transform 0.6s ease" : "none";
-      track.style.transform = `translateX(-${offset}px)`;
+      // is-center クラスの付け替え
+      slides.forEach((slide, index) => {
+        slide.classList.toggle("is-center", index === currentIndex);
+      });
 
-      // update dots (クローンを除外した実際のインデックス)
-      const realIndex = (currentIndex - 1 + slideCount) % slideCount;
+      // ドットの更新（クローンを除外）
+      const realIndex = ((currentIndex - 1 + slideCount) % slideCount);
       dots.forEach((dot, i) => {
         dot.classList.toggle("active", i === realIndex);
       });
-
-      // update active class
-      slides.forEach((slide, index) => {
-        slide.classList.toggle("active", index === currentIndex);
-      });
     };
 
-    const move = (direction) => {
-      if (isTransitioning) return;
-
-      isTransitioning = true;
-      currentIndex = direction === 'next' ? currentIndex + 1 : currentIndex - 1;
-      updateCarousel(true);
+    const goToIndex = (index) => {
+      if (isAnimating) return;
+      isAnimating = true;
+      currentIndex = index;
+      track.style.transition = "transform 0.6s ease";
+      updateCarousel();
     };
 
-    const goNext = () => move('next');
-    const goPrev = () => move('prev');
+    // 自動再生機能
+    const startAutoPlay = () => {
+      if (autoPlayInterval) return;
+      autoPlayInterval = setInterval(() => {
+        goToIndex(currentIndex + 1);
+      }, 2000);
+    };
+
+    const stopAutoPlay = () => {
+      if (autoPlayInterval) {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = null;
+      }
+    };
+
+    const restartAutoPlay = () => {
+      stopAutoPlay();
+      setTimeout(() => {
+        startAutoPlay();
+      }, 5000);
+    };
 
     // 初期表示
-    updateCarousel(false);
+    track.style.display = "flex";
+    updateCarousel();
+    startAutoPlay();
+
+    // ボタンイベント
+    nextBtn.addEventListener("click", () => {
+      restartAutoPlay();
+      goToIndex(currentIndex + 1);
+    });
 
     // transitionend で無限ループを実現
-    track.addEventListener("transitionend", (e) => {
-      // transformプロパティの変化のみを処理
-      if (e.propertyName !== 'transform') return;
-
-      // 必ずisTransitioningをfalseに戻す
-      isTransitioning = false;
-
+    track.addEventListener("transitionend", () => {
       const currentSlide = slides[currentIndex];
       if (currentSlide && currentSlide.classList.contains("is-clone")) {
-        // クローンに到達したら瞬間移動
+        // クローンスライド到達 → 瞬間ジャンプ
+        track.style.transition = "none";
         if (currentIndex === slides.length - 1) {
-          // firstClone → 本物のslide1へ
           currentIndex = 1;
         } else if (currentIndex === 0) {
-          // lastClone → 本物の最後のスライドへ
-          currentIndex = slideCount;
+          currentIndex = slides.length - 2;
         }
+        updateCarousel();
 
-        // transitionなしで瞬間移動
-        track.style.transition = "none";
-        const slideWidth = getSlideWidth();
-        const gap = getGap();
-        const windowWidth = windowEl.offsetWidth;
-        const centerOffset = (windowWidth - slideWidth) / 2;
-        const offset = currentIndex * (slideWidth + gap) - centerOffset;
-        track.style.transform = `translateX(-${offset}px)`;
-
-        // ドットとactive classを更新
-        const realIndex = (currentIndex - 1 + slideCount) % slideCount;
-        dots.forEach((dot, i) => {
-          dot.classList.toggle("active", i === realIndex);
-        });
-        slides.forEach((slide, index) => {
-          slide.classList.toggle("active", index === currentIndex);
-        });
-      }
-    });
-
-    // 長押しで連続スクロール
-    const startAutoScroll = (direction) => {
-      if (autoScrollInterval) return;
-
-      // 最初の1回を即座に実行
-      if (direction === 'next') {
-        goNext();
+        // 瞬間ジャンプ後、レンダリング完了を待ってからフラグ解除
+        setTimeout(() => {
+          track.style.transition = "transform 0.6s ease";
+          isAnimating = false;
+        }, 50);
       } else {
-        goPrev();
+        // 通常スライド → 即座にフラグ解除
+        isAnimating = false;
       }
-
-      // 以降は一定間隔で実行
-      autoScrollInterval = setInterval(() => {
-        if (direction === 'next') {
-          goNext();
-        } else {
-          goPrev();
-        }
-      }, 400);
-    };
-
-    const stopAutoScroll = () => {
-      if (autoScrollInterval) {
-        clearInterval(autoScrollInterval);
-        autoScrollInterval = null;
-      }
-    };
-
-    // Next button
-    nextBtn.addEventListener("mousedown", () => startAutoScroll('next'));
-    nextBtn.addEventListener("mouseup", stopAutoScroll);
-    nextBtn.addEventListener("mouseleave", stopAutoScroll);
-    nextBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      startAutoScroll('next');
     });
-    nextBtn.addEventListener("touchend", stopAutoScroll);
-    nextBtn.addEventListener("touchcancel", stopAutoScroll);
-
-    // Prev button
-    prevBtn.addEventListener("mousedown", () => startAutoScroll('prev'));
-    prevBtn.addEventListener("mouseup", stopAutoScroll);
-    prevBtn.addEventListener("mouseleave", stopAutoScroll);
-    prevBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      startAutoScroll('prev');
-    });
-    prevBtn.addEventListener("touchend", stopAutoScroll);
-    prevBtn.addEventListener("touchcancel", stopAutoScroll);
 
     // ドットクリック
     dots.forEach((dot, dotIndex) => {
       dot.addEventListener("click", () => {
-        if (isTransitioning) return;
-        isTransitioning = true;
-        currentIndex = dotIndex + 1; // +1 because of leading clone
-        updateCarousel(true);
+        restartAutoPlay();
+        goToIndex(dotIndex + 1); // +1 because of leading clone
       });
     });
 
     // リサイズ対応
-    let resizeTimer;
     window.addEventListener("resize", () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        updateCarousel(false);
-      }, 100);
+      updateCarousel();
+    });
+
+    // ページ離脱時のクリーンアップ
+    window.addEventListener("beforeunload", () => {
+      stopAutoPlay();
     });
   }
 
   // =========================
-  // Category panel accordion (PC only)
+  // Category panel accordion
   // =========================
   const categoryButtons = document.querySelectorAll(
-    ".category-panel .category-item > button"
+    ".category-panel .category-item > button, .category-panel-mobile .category-item > button"
   );
 
   categoryButtons.forEach((button) => {
@@ -222,8 +173,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // open default category if marked (PC only)
-  const defaultOpenItems = document.querySelectorAll(".category-panel .category-item.is-open");
+  // open default category if marked
+  const defaultOpenItems = document.querySelectorAll(".category-item.is-open");
   defaultOpenItems.forEach((defaultOpenItem) => {
     const defaultButton = defaultOpenItem.querySelector("button");
     const defaultContent = defaultOpenItem.querySelector("ul");
