@@ -1,0 +1,20 @@
+# Large video files
+assets/videos/*.mp4
+assets/videos/*.mov
+assets/videos/*.avi
+画像/メディア一覧/*.mp4
+画像/メディア一覧/*.mov
+画像/メディア一覧/*.avi
+
+# Node modules
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

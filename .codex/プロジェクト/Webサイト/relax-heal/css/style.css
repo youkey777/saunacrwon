@@ -146,7 +146,7 @@ img {
 }
 
 .hero-carousel {
-  padding: clamp(12px, 2vw, 24px) 0 40px;
+  padding: clamp(12px, 2vw, 24px) 0 60px;
   background: linear-gradient(180deg, #f5fbff, #eef5ff);
 }
 
@@ -225,7 +225,19 @@ img {
 }
 
 .carousel-slide::after {
-  display: none;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+  border-radius: 26px;
+  transition: opacity 0.4s ease;
+}
+.carousel-slide.is-center::after {
+  opacity: 0;
 }
 
 .slide-label {
@@ -549,6 +561,18 @@ img {
   }
   .series-collage--reversed {
     grid-template-columns: 1fr;
+  }
+}
+
+/* デスクトップ・タブレット用（769px以上）：画像をカード全体に表示 */
+@media (min-width: 769px) {
+  .series-collage {
+    height: 300px;
+  }
+
+  .series-main,
+  .series-rect {
+    height: 100%;
   }
 }
 
@@ -1318,5 +1342,56 @@ img {
   .series-mobile-item.series-square img {
     max-height: 100%;
     object-fit: contain;
+  }
+}
+
+/* 商品シリーズブロック
+   -------------------------------------------------- */
+.product-series-block {
+  margin-top: 64px;
+}
+
+.product-series-block .section-header {
+  margin-bottom: 24px;
+}
+
+/* グリッドレイアウト */
+.product-series-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* 各カード */
+.product-series-item {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: #f5f5f7;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-series-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* PC / タブレットレイアウト */
+@media (min-width: 768px) {
+  .product-series-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .product-series-item {
+    border-radius: 18px;
+  }
+
+  .product-series-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   }
 }
